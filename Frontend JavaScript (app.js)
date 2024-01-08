@@ -1,0 +1,21 @@
+const socket = io();
+
+function sendMessage() {
+    const messageInput = document.getElementById('message-input');
+    const message = messageInput.value.trim();
+
+    if (message !== '') {
+        socket.emit('message', message);
+        messageInput.value = '';
+    }
+}
+
+socket.on('message', (message) => {
+    const chatRoom = document.getElementById('chat-room');
+    const messageElement = document.createElement('div');
+    messageElement.textContent = message;
+    chatRoom.appendChild(messageElement);
+
+    // Scroll to the bottom of the chat room
+    chatRoom.scrollTop = chatRoom.scrollHeight;
+});
